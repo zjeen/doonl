@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="padding-5">
+  <div id="app">
     <router-view/>
     <NavBar />
   </div>

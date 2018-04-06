@@ -7,6 +7,7 @@ import store from "./store/index"
 import "./assets/dist/css/mui.css"
 import * as mm from "./assets/dist/js/mui.js"
 global.mui = mm
+
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
