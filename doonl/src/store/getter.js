@@ -11,4 +11,4 @@ export const imgh = state => (state.globaData.w/3-10)*156/123
 
 export const rec = state => state.movieData.recommend
 export const homeRess = state => state.movieData.homeRes
-export const datas = state => state.movieData.datas
+export const datass = state => state.movieData.datas

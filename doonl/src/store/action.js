@@ -42,13 +42,12 @@ export const getHomeRes = function({commit,state},url){
 }
 //数据获取
 export const getDatas = function({commit,state},dts){
-	mui.getJSON(dts.url,function(dt){
+	
 		
 		commit({
 			type:"setDatas",
 			id:dts.id,
-			msg:dt
-		})
+			msg:dts.dt
 		
 	})
 }

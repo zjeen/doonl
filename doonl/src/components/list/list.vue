@@ -2,8 +2,9 @@
 	<div>
 	<topBar title="光影在线" :show="false" v-show="isshow"/>	
 	<search :isfx="!isshow"/>
-	<movieNav b="1" c="1" d="1" :all="datas[a][1]"/>
-	 <movies :res="datas[a][0]" :url="imga"/>
+	<movieNav :b="b" :c="c" :d="d" :e="e" :all="datas[1]" v-show="a==1"/>
+	<tvNav :b="b" :c="c" :d="d" :e="e" :all="datas[1]" v-show="a==2"/>
+	<movies :res="datas[0]" :url="imga" />
 	</div>
 </template>
 
@@ -12,6 +13,7 @@
 	import topBar from "../public/topBar"
 	import search from "../public/search"
 	import movieNav from "./movieNav"
+	import tvNav from "./tvNav"
 	import movies from "../home/movies"
 	export default {
 		name:"List",
@@ -19,25 +21,30 @@
 		data(){
 			return {
 				isshow:true,
-				imga:""
+				imga:"",
+				datas:''
 				
 			}
 		},
 		computed:{
-			...mapGetters(['navState','datas'])
+			...mapGetters(['navState','datass'])
 			
+		},
+		created:function(){
+			this.getNavZt(this.a)
+			this.changeNavState(1)//底部导航激活状态
+			var url = this.getUrl(this.a)
+			this.getDt(url)
 		},
 		components:{
 			topBar,
 			search,
 			movieNav,
-			movies
+			movies,
+			tvNav
 		},
 		mounted:function(){//组件渲染完成后的函数
-			this.getNavZt(this.a)
-			this.changeNavState(1)//底部导航激活状态
-			var url = this.getUrl(this.a)
-			this.getDatas({url:url,id:this.a})
+		
 			
 			window.addEventListener('scroll', ()=>{//监听滚动事件
 			 	if( document.body.scrollTop > 50){
@@ -58,7 +65,8 @@
 						this.imga = "upload"
 						break;
 					case "2":
-						url = `/api/1/1/1/1/wx-list`
+						url = `/api/${this.b}/${this.c}/${this.d}/${this.e}/wx-tvlist`
+						this.imga = "tv"
 						break;
 					case "3":
 						url = `/api/1/1/1/1/wx-list`
@@ -77,12 +85,27 @@
 						break;	
 				}
 				return url
+			},
+			getDt:function(url){
+				mui.getJSON(url,(dt)=>{
+					console.log(123)
+					this.datas=dt
+				})
+			},
+			getDta:function(url){
+				mui.getJSON(url,(dt)=>{
+					console.log(123)
+					this.datas=dt
+				})
 			}
 		},
 		 watch:{
 		 	'$route' (to, from) {
+		 			console.log(to)
 			      this.getNavZt(this.a)
-			    }
+			      var url = this.getUrl(this.a)
+			      this.getDta(url);
+			 }
 		 }
 		
 	}
